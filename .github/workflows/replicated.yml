@@ -26,9 +26,6 @@ jobs:
           ls -al /usr/bin/kubectl-kuttl
           PATH=/usr/bin:$PATH
           kubectl kuttl version
-          pwd
-          ls -al
-          ls -al /home/runner
 
       - name: Create Cluster
         id: create-cluster
@@ -43,6 +40,10 @@ jobs:
 
       - name: Setup stackable data platform
         run: |
+          pwd
+          ls -al
+          ls -al /home/runner
+          kubectl config view
           ./stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
 
       - name: Run a test
