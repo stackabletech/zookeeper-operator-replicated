@@ -72,7 +72,7 @@ jobs:
           ttl: 30m
           kubeconfig-path: ${{ env.KUBECONFIG }}
           nodes: ${{ matrix.cluster.size }}
-          instance_type: $${{ matrix.cluster.instances }}
+          instance-type: $${{ matrix.cluster.instances }}
 
       - name: Setup stackable data platform
         run: |
