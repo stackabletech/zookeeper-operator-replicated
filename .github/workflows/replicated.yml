@@ -1,0 +1,50 @@
+name: test on replicated
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  compatibility-matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        cluster: [ {distribution: kind, version: v1.25.3}, {distribution: kind, version: v1.26.3}]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create Cluster
+        id: create-cluster
+        uses: replicatedhq/replicated-actions/create-cluster@v1
+        with:
+          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+          kubernetes-distribution: ${{ matrix.cluster.distribution }}
+          kubernetes-version: ${{ matrix.cluster.version }}
+          cluster-name: ${{ github.ref_name }}-${{ matrix.cluster.distribution }}-${{ matrix.cluster.version }}
+          timeout-minutes: 2
+          ttl: 30m
+
+      - name: Install stackablectl & beku
+        run: |
+          wget https://github.com/stackabletech/stackable-cockpit/releases/download/stackablectl-23.11.1/stackablectl-x86_64-unknown-linux-gnu
+          chmod +x stackablectl-x86_64-unknown-linux-gnu
+          pipx install beku-stackabletech
+
+      - name: Setup stackable data platform
+        run: |
+          stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
+
+      - name: Run a test
+        # mask the kubeconfig so it doesn't show up in the logs
+        run: |
+          scripts/run_tests.sh --parallel 2
+
+      - name: Remove Cluster
+        id: remove-cluster
+        uses: replicatedhq/replicated-actions/remove-cluster@v1
+        continue-on-error: true # It could be that the cluster is already removed
+        with:
+          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+          cluster-id: ${{ steps.create-cluster.outputs.cluster-id }}
