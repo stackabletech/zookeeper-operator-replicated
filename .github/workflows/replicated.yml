@@ -13,7 +13,38 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cluster: [ {distribution: kind, version: v1.25.3, size: 3}, {distribution: aks, version: v1.28, size: 3}, {distribution: eks, version: v1.28, size: 3}, {distribution: gke, version: v1.28, size: 3}, {distribution: openshift, version: 4.13.0-okd, size: 1}, {distribution: k3s, version: v1.28.3, size: 3}]
+        cluster: [
+          {
+            distribution: kind,
+            version: v1.25.3,
+            size: 1,
+            instances: r1.2xlarge
+          }, {
+            distribution: aks,
+            version: v1.28,
+            size: 5,
+            instances: Standard_B8ms
+          }, {
+            distribution: eks,
+            version: v1.28,
+            size: 5,
+            instances: m6i.4xlarge
+          }, {
+            distribution: gke,
+            version: v1.28,
+            size: 5,
+            instances: n2-standard-8
+          }, {
+            distribution: openshift,
+            version: 4.13.0-okd,
+            size: 1,
+            instances: r1.2xlarge
+          }, {
+            distribution: k3s,
+            version: v1.28.3,
+            size: 5,
+            instances: r1.xlarge
+          }]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -41,6 +72,7 @@ jobs:
           ttl: 30m
           kubeconfig-path: ${{ env.KUBECONFIG }}
           nodes: ${{ matrix.cluster.size }}
+          instance_types: $${{ matrix.cluster.instances }}
 
       - name: Setup stackable data platform
         run: |
