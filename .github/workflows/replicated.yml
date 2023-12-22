@@ -26,11 +26,14 @@ jobs:
           timeout-minutes: 2
           ttl: 30m
 
-      - name: Install stackablectl & beku
+      - name: Install stackablectl & beku & kuttl
         run: |
           wget https://github.com/stackabletech/stackable-cockpit/releases/download/stackablectl-23.11.1/stackablectl-x86_64-unknown-linux-gnu
           chmod +x stackablectl-x86_64-unknown-linux-gnu
           pipx install beku-stackabletech
+          wget https://github.com/kudobuilder/kuttl/releases/download/v0.15.0/kubectl-kuttl_0.15.0_linux_x86_64
+          chmod +x kubectl-kuttl_0.15.0_linux_x86_64
+          mv kubectl-kuttl_0.15.0_linux_x86_64 ~/bin/kuttl
 
       - name: Setup stackable data platform
         run: |
