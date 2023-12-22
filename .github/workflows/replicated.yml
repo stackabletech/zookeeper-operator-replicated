@@ -23,6 +23,7 @@ jobs:
           wget --no-verbose https://github.com/kudobuilder/kuttl/releases/download/v0.15.0/kubectl-kuttl_0.15.0_linux_x86_64
           chmod +x kubectl-kuttl_0.15.0_linux_x86_64
           sudo mv kubectl-kuttl_0.15.0_linux_x86_64 /usr/bin/kuttl
+          echo $PATH
 
       - name: Create Cluster
         id: create-cluster
