@@ -43,12 +43,13 @@ jobs:
           KUBECONFIG: /tmp/kubeconfig
         run: |
           echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > ${KUBECONFIG}
-          cat $(echo ${KUBECONFIG})
-          kubectl config view
           ./stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
 
       - name: Run a test
+        env:
+          KUBECONFIG: /tmp/kubeconfig
         run: |
+          echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > ${KUBECONFIG}
           scripts/run_tests.sh --parallel 2
 
       - name: Remove Cluster
