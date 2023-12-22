@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cluster: [ {distribution: kind, version: v1.25.3}, {distribution: kind, version: v1.26.3}]
+        cluster: [ {distribution: kind, version: v1.25.3}, {distribution: aks, version: v1.28}, {distribution: eks, version: v1.28}, {distribution: gke, version: v1.28}, {distribution: openshift, version: 4.13.0-okd}, {distribution: k3s, version: v1.28.3}]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
