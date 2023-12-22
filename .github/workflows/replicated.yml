@@ -34,7 +34,7 @@ jobs:
 
       - name: Setup stackable data platform
         run: |
-          stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
+          ./stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
 
       - name: Run a test
         # mask the kubeconfig so it doesn't show up in the logs
