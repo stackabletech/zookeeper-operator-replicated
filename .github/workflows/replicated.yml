@@ -41,16 +41,18 @@ jobs:
       - name: Setup stackable data platform
         with:
           kubeconfig: ${{ steps.create-cluster.outputs.cluster-kubeconfig }}
-        run: |
-          kubectl config view
-          ./stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
+        steps:
+          run: |
+            kubectl config view
+            ./stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
 
       - name: Run a test
         with:
           kubeconfig: ${{ steps.create-cluster.outputs.cluster-kubeconfig }}
         # mask the kubeconfig so it doesn't show up in the logs
-        run: |
-          scripts/run_tests.sh --parallel 2
+        steps:
+          run: |
+            scripts/run_tests.sh --parallel 2
 
       - name: Remove Cluster
         if: always()
