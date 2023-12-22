@@ -42,6 +42,7 @@ jobs:
           scripts/run_tests.sh --parallel 2
 
       - name: Remove Cluster
+        if: always()
         id: remove-cluster
         uses: replicatedhq/replicated-actions/remove-cluster@v1
         continue-on-error: true # It could be that the cluster is already removed
