@@ -23,8 +23,8 @@ jobs:
           wget --no-verbose https://github.com/kudobuilder/kuttl/releases/download/v0.15.0/kubectl-kuttl_0.15.0_linux_x86_64
           chmod +x kubectl-kuttl_0.15.0_linux_x86_64
           echo $PATH
-          sudo mv kubectl-kuttl_0.15.0_linux_x86_64 /usr/bin/kuttl
-          ls -al /usr/bin/kuttl
+          sudo mv kubectl-kuttl_0.15.0_linux_x86_64 /usr/bin/kubectl-kuttl
+          ls -al /usr/bin/kubectl-kuttl
           PATH=/usr/bin/kuttl:$PATH
           echo $PATH
           kubectl kuttl version
