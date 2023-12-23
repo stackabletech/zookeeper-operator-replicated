@@ -68,7 +68,7 @@ jobs:
           kubernetes-distribution: ${{ matrix.cluster.distribution }}
           kubernetes-version: ${{ matrix.cluster.version }}
           cluster-name: ${{ github.ref_name }}-${{ matrix.cluster.distribution }}-${{ matrix.cluster.version }}
-          timeout-minutes: 5
+          timeout-minutes: 10
           ttl: 30m
           kubeconfig-path: ${{ env.KUBECONFIG }}
           nodes: ${{ matrix.cluster.size }}
@@ -76,12 +76,10 @@ jobs:
 
       - name: Setup stackable data platform
         run: |
-          echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > ${KUBECONFIG}
           ./stackablectl-x86_64-unknown-linux-gnu op in secret commons listener zookeeper
 
       - name: Run a test
         run: |
-          echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > ${KUBECONFIG}
           scripts/run_tests.sh --parallel 2
 
       - name: Remove Cluster
