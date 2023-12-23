@@ -28,7 +28,7 @@ jobs:
             distribution: eks,
             version: v1.28,
             size: 5,
-            instances: "m6i.4xlarge"
+            instances: "m6i.large"
           }, {
             distribution: gke,
             version: v1.28,
