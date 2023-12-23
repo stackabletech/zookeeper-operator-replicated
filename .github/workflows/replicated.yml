@@ -18,7 +18,7 @@ jobs:
             distribution: kind,
             version: v1.25.3,
             size: 1,
-            instances: "r1.2xlarge"
+            instances: 2xlarge
           }]
 
 #          , {
